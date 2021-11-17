@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Board Dashboard</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    <h1>Whats up {{ user.first_name }}!</h1>
+    <h3>Go ahead and post jobs you can offer based on your skills, and add the jobs you want to your list by selecting "ADD"</h3>
+    <section>
+      <div class="top-right">
+        <a href="/logout"><u>Log Out</u></a>
+        <a href="/create" class="btn btn-secondary">New Job!</a>
+      </div>
+    </section>
+
+    <h2>Everyone's jobs:</h2>
+    <div id="home">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in jobs %}
+          <tr>
+            <td>{{job.title}}</td>
+            <td>{{job.location}}</td>
+            <td>
+              <a href="/jobs/{{ job.id }}">View |</a>
+              {% if job.creator.id == user.id %}
+              <a href="/jobs/delete/{{job.id}}">Remove |</a>
+              <a href="/jobs/edit/{{job.id}}">Edit |</a>
+              {% endif %}
+              <a href="/jobs/add/{{ job.id }}">Add |</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <section>
+      <h2>{{user.first_name}}'s jobs</h2>
+
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for job in user.selected_jobs.all %}
+          <tr>
+            <td>{{job.title}}</td>
+            <td>
+              <a href="/jobs/{{ job.id }}">View |</a>
+              <a href="/jobs/delete/{{job.id}}">Done |</a>
+              <a href="/jobs/give_up/{{job.id}}">Give Up |</a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </body>
+</html>

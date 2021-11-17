@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View job</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+      crossorigin="anonymous"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    <h2>Hello {{ current_user.first_name }}! These are the job details!</h2>
+    <section>
+      <div class="top-right">
+        <a href="/dashboard">Dashboard &nbsp;</a>
+        <a href="/logout">Log Out</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>{{job.title}}</h2>
+      <div class="border">
+        <div class="form-group">
+          <ul style="list-style-type: none">
+            <li>{{job.description}}</li>
+            <li>Location: {{job.location}}</li>
+            <li>Posted By: {{job.creator.first_name}}</li>
+            <li>Posted On: {{job.created_at}}</li>
+          </ul>
+        </div>
+    </div>
+      </div>
+    </section>
+
+    <a href="/jobs/add/{{job.id}}" >Add to my jobs</a>
+  </body>
+</html>
